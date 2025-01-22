@@ -10,13 +10,12 @@ public class Main {
     }
 
     public static void main(String[] args) {
-
         int continuar = 0;
-        String[] inventario = {"Ordenador", "Mesa", "Silla", "Carrito", "Teclado", "Cargador",};
-
+        String[] inventario = {"Ordenador", "Mesa", "Silla", "Carrito", "Teclado", "Cargador"};
         Scanner sc = new Scanner(System.in);
+        String palabraQuitar = "";
         boolean seguir = true;
-        int eleccion = 0;
+        int eleccion;
         do {
             System.out.println("INVENTARI CIFP PERE DE SON GALL");
             System.out.println("QUE DESEAS HACER?");
@@ -30,12 +29,27 @@ public class Main {
             System.out.println("8. Salir");
             eleccion = sc.nextInt();
                 switch (eleccion) {
-                    case 1 : {}
-                    case 2 : {}
+                    case 1 : {
+                        System.out.println("Que quieres añadir:");
+                        String palabranueva = sc.next();
+                        inventario=anadirProducto(palabranueva,inventario);
+                    } break;
+                    case 2 : {
+                        System.out.println("Que producto quieres eliminar?: ");
+                        palabraQuitar = sc.next();
+                        for (int i = 0; i < inventario.length; i++) {
+                            if (inventario[i].contains(palabraQuitar)) {
+                                inventario[i]="";
+                            }
+                        }
+                        } break;
                     case 3 : {}
                     case 4 : {}
                     case 5 : {}
-                    case 6 : {}
+                    case 6 : {
+                        System.out.println("Aqui tienes el inventario actual: ");
+                        System.out.println(Arrays.toString(inventario)); break;
+                    }
                     case 7 : {}
                     case 8 : {
                         System.out.println("Has finalizado el programa!");
