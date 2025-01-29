@@ -1,12 +1,37 @@
 
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
     public static String[] anadirProducto(String palabra, String[] inventarios) {
         String[] newInventario = Arrays.copyOf(inventarios, inventarios.length + 1);
-        newInventario[newInventario.length -1] = palabra;
+        newInventario[newInventario.length - 1] = palabra;
         return newInventario;
+    }
+
+    public static String[] quitarProducto(String palabraQuitar, String[] inventario) {
+        int posicion = 0;
+        String copia = "";
+        for (int i = 0; i < inventario.length; i++) {
+            if (inventario[i].equals(palabraQuitar)) {
+                posicion = i;
+                copia = inventario[inventario.length - 1];
+                inventario = Arrays.copyOf(inventario, inventario.length - 1);
+                inventario[posicion] = copia;
+            } else if (inventario[inventario.length - 1].equals(palabraQuitar)) {
+                inventario = Arrays.copyOf(inventario, inventario.length - 1);
+            }
+        }
+        return inventario;
+    }
+
+    public static String[] quitarPosicion(int posicion2, String[] inventario) {
+       String[] copia = new String[inventario.length-1];
+       System.arraycopy(inventario,0,copia,0,posicion2);
+       System.arraycopy(inventario,posicion2+1,copia,posicion2,inventario.length-posicion2-1);
+
+        return copia;
     }
 
     public static void main(String[] args) {
@@ -28,35 +53,52 @@ public class Main {
             System.out.println("7. Mostrar resumen del inventario");
             System.out.println("8. Salir");
             eleccion = sc.nextInt();
-                switch (eleccion) {
-                    case 1 : {
-                        System.out.println("Que quieres añadir:");
-                        String palabranueva = sc.next();
-                        inventario=anadirProducto(palabranueva,inventario);
-                    } break;
-                    case 2 : {
-                        System.out.println("Que producto quieres eliminar?: ");
-                        palabraQuitar = sc.next();
-                        for (int i = 0; i < inventario.length; i++) {
-                            if (inventario[i].contains(palabraQuitar)) {
-                                inventario[i]="";
-                            }
-                        }
-                        } break;
-                    case 3 : {}
-                    case 4 : {}
-                    case 5 : {}
-                    case 6 : {
-                        System.out.println("Aqui tienes el inventario actual: ");
-                        System.out.println(Arrays.toString(inventario)); break;
-                    }
-                    case 7 : {}
-                    case 8 : {
-                        System.out.println("Has finalizado el programa!");
-                        seguir = false;
-                    }
+            switch (eleccion) {
+                case 1: {
+                    System.out.println("Que quieres añadir:");
+                    String palabranueva = sc.next();
+                    inventario = anadirProducto(palabranueva, inventario);
                 }
-        }while (seguir);
+                break;
+                case 2: {
+                    System.out.println("Que producto quieres eliminar?: ");
+                    palabraQuitar = sc.next();
+                    inventario = quitarProducto(palabraQuitar, inventario);
+                    System.out.println(Arrays.toString(inventario));
+
+                }
+                break;
+
+
+                case 3: {
+                    System.out.println("Que posicion quieres eliminar?: ");
+                    int posicionquitar = sc.nextInt();
+                    inventario = quitarPosicion(posicionquitar, inventario);
+                    System.out.println(Arrays.toString(inventario));
+
+                }
+                break;
+
+                case 4: {
+                }
+                case 5: {
+                }
+                case 6: {
+                    System.out.println("Aqui tienes el inventario actual: ");
+                    System.out.println(Arrays.toString(inventario));
+                    break;
+                }
+                case 7: {
+                }
+                case 8: {
+                    System.out.println("Has finalizado el programa!");
+                    seguir = false;
+                }
+            }
+
+
+        }while (seguir) ;
 
     }
 }
+
