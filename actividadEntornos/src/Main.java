@@ -34,16 +34,6 @@ public class Main {
         return copia;
     }
 
-    public static String [] sustituir(String[] array, String nombre , String sustituir){
-        int index =0;
-        for (int i = 0; i <array.length ; i++) {
-            if (array[i].equals(nombre)){
-             array[i]=sustituir;
-            }
-        }
-        return array;
-    }
-
     public static void main(String[] args) {
         int continuar = 0;
         String[] inventario = {"Ordenador", "Mesa", "Silla", "Carrito", "Teclado", "Cargador"};
@@ -75,6 +65,7 @@ public class Main {
                     palabraQuitar = sc.next();
                     inventario = quitarProducto(palabraQuitar, inventario);
                     System.out.println(Arrays.toString(inventario));
+
                 }
                 break;
 
@@ -84,18 +75,13 @@ public class Main {
                     int posicionquitar = sc.nextInt();
                     inventario = quitarPosicion(posicionquitar, inventario);
                     System.out.println(Arrays.toString(inventario));
+
                 }
                 break;
 
                 case 4: {
-                    System.out.println("Que palabra quieres cambiar");
-                    String cambio = sc.next();
-                    System.out.println("Que palabra quieres poner ");
-                    String sustituto= sc.next();
-                    inventario=sustituir(inventario,cambio,sustituto);
                 }
                 case 5: {
-
                 }
                 case 6: {
                     System.out.println("Aqui tienes el inventario actual: ");
