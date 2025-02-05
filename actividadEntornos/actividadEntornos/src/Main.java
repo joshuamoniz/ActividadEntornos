@@ -1,5 +1,3 @@
-
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -34,11 +32,30 @@ public class Main {
         return copia;
     }
 
-    public static String [] sustituir(String[] array, String nombre , String sustituir){
+    public static String [] modificar(String[] array, String nombre , String sustituir){
         int index =0;
         for (int i = 0; i <array.length ; i++) {
             if (array[i].equals(nombre)){
              array[i]=sustituir;
+            }
+        }
+        return array;
+    }
+
+    public static String[] sustituirPorOtro(String[] array, String palabra, int posicion) {
+        boolean hacer = false;
+        int index = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equals(palabra)) {
+                hacer = true;
+                index = i;
+            }
+        }
+        if (posicion >= 0 && posicion < array.length) {
+            if (hacer) {
+                String temp = array[posicion];
+                array[posicion] = palabra;
+                array[index] = temp;
             }
         }
         return array;
@@ -92,9 +109,14 @@ public class Main {
                     String cambio = sc.next();
                     System.out.println("Que palabra quieres poner ");
                     String sustituto= sc.next();
-                    inventario=sustituir(inventario,cambio,sustituto);
+                    inventario = modificar(inventario,cambio,sustituto);
                 }
                 case 5: {
+                    System.out.println("Que palabra quieres sustituir?: ");
+                    String palabraASustituir = sc.next();
+                    System.out.println("En que posición quieres insertar la palabra?; ");
+                    int posicion = sc.nextInt();
+                    inventario = sustituirPorOtro(inventario, palabraASustituir, posicion);
 
                 }
                 case 6: {
@@ -103,6 +125,7 @@ public class Main {
                     break;
                 }
                 case 7: {
+                    
                 }
                 case 8: {
                     System.out.println("Has finalizado el programa!");
