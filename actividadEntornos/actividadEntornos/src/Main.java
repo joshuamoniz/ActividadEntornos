@@ -12,7 +12,7 @@ public class Main {
         int posicion = 0;
         String copia = "";
         for (int i = 0; i < inventario.length; i++) {
-            if (inventario[i].equals(palabraQuitar)) {
+            if (inventario[i].equalsIgnoreCase(palabraQuitar)) {
                 posicion = i;
                 copia = inventario[inventario.length - 1];
                 inventario = Arrays.copyOf(inventario, inventario.length - 1);
@@ -25,23 +25,28 @@ public class Main {
     }
 
     public static String[] quitarPosicion(int posicion2, String[] inventario) {
-       String[] copia = new String[inventario.length-1];
-       System.arraycopy(inventario,0,copia,0,posicion2);
-       System.arraycopy(inventario,posicion2+1,copia,posicion2,inventario.length-posicion2-1);
+        String[] copia = new String[inventario.length - 1];
+        if (posicion2 >= 0 && posicion2 < inventario.length) {
+            System.arraycopy(inventario, 0, copia, 0, posicion2);
+            System.arraycopy(inventario, posicion2 + 1, copia, posicion2, inventario.length - posicion2 - 1);
+        }
+        else {
+            System.out.println("No hay tantas posiciones en la tabla.");
+            copia = Arrays.copyOf(inventario, inventario.length);
+        }
 
         return copia;
     }
 
-    public static String [] modificar(String[] array, String nombre , String sustituir){
-        int index =0;
-        for (int i = 0; i <array.length ; i++) {
-            if (array[i].equals(nombre)){
-             array[i]=sustituir;
+    public static String[] modificar(String[] array, String nombre, String sustituir) {
+        int index = 0;
+        for (int i = 0; i < array.length; i++) {
+            if (array[i].equalsIgnoreCase(nombre)) {
+                array[i] = sustituir;
             }
         }
         return array;
     }
-
     public static String[] sustituirPorOtro(String[] array, String palabra, int posicion) {
         boolean hacer = false;
         int index = 0;
@@ -60,7 +65,18 @@ public class Main {
         }
         return array;
     }
-
+    public static int[] contarInventario(String[] inventario) {
+        int[] cantidadInventario = new int[inventario.length];
+        for (int i = 0; i < inventario.length; i++) {
+            for (int j = 0; j < inventario.length; j++) {
+                if (inventario[i].equalsIgnoreCase(inventario[j])) {
+                    cantidadInventario[i]++;
+                }
+            }
+        }
+        System.out.println(Arrays.toString(cantidadInventario));
+        return cantidadInventario;
+    }
     public static void main(String[] args) {
         int continuar = 0;
         String[] inventario = {"Ordenador", "Mesa", "Silla", "Carrito", "Teclado", "Cargador"};
@@ -82,7 +98,7 @@ public class Main {
             eleccion = sc.nextInt();
             switch (eleccion) {
                 case 1: {
-                    System.out.println("Que quieres añadir:");
+                    System.out.println("Que producto quieres añadir:");
                     String palabranueva = sc.next();
                     inventario = anadirProducto(palabranueva, inventario);
                 }
@@ -94,8 +110,6 @@ public class Main {
                     System.out.println(Arrays.toString(inventario));
                 }
                 break;
-
-
                 case 3: {
                     System.out.println("Que posicion quieres eliminar?: ");
                     int posicionquitar = sc.nextInt();
@@ -103,38 +117,43 @@ public class Main {
                     System.out.println(Arrays.toString(inventario));
                 }
                 break;
-
                 case 4: {
                     System.out.println("Que palabra quieres cambiar");
                     String cambio = sc.next();
                     System.out.println("Que palabra quieres poner ");
-                    String sustituto= sc.next();
-                    inventario = modificar(inventario,cambio,sustituto);
+                    String sustituto = sc.next();
+                    inventario = modificar(inventario, cambio, sustituto);
                 }
+                break;
                 case 5: {
-                    System.out.println("Que palabra quieres sustituir?: ");
+                    System.out.println("Que palabra quieres mover?: ");
                     String palabraASustituir = sc.next();
                     System.out.println("En que posición quieres insertar la palabra?; ");
                     int posicion = sc.nextInt();
                     inventario = sustituirPorOtro(inventario, palabraASustituir, posicion);
 
                 }
+                break;
                 case 6: {
                     System.out.println("Aqui tienes el inventario actual: ");
                     System.out.println(Arrays.toString(inventario));
-                    break;
                 }
+                break;
                 case 7: {
-                    
+                    System.out.println("Aquí tienes la informacion del inventario: ");
+                    System.out.println(Arrays.toString(inventario));
+                    contarInventario(inventario);
                 }
+                break;
                 case 8: {
                     System.out.println("Has finalizado el programa!");
                     seguir = false;
                 }
+                break;
             }
 
 
-        }while (seguir) ;
+        } while (seguir);
 
     }
 }
